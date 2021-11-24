@@ -65,6 +65,7 @@ public class StudentRest {
         Student studentToDelete = service.getById(id);
         if (studentToDelete == null)
             throw new StudentDeletedException(id);
+        service.deleteStudent(studentToDelete.getId());
         return Response.accepted("Deleted!").build();
     }
 

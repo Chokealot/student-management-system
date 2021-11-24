@@ -17,10 +17,6 @@ public class StudentService {
         return student;
     }
 
-    public Student findById(Long id) {
-        return em.find(Student.class, id);
-    }
-
     public List<Student> getAllStudents() {
         return em.createQuery("select s from Student s", Student.class).getResultList();
     }

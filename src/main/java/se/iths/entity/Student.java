@@ -1,12 +1,10 @@
 package se.iths.entity;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -24,6 +22,25 @@ public class Student {
     @NotEmpty(message = "Cannot be empty!")
     private String email;
     private String phoneNumber;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Subject> subjects = new ArrayList<>();
+
+    public Student(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Student() { }
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
 
     public Long getId() {
         return id;
