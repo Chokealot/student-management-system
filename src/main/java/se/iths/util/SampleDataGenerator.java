@@ -20,13 +20,6 @@ public class SampleDataGenerator {
     @PersistenceContext
     EntityManager em;
 
-    @Inject
-    StudentService studentService;
-
-    @Inject
-    TeacherService teacherService;
-
-
     @PostConstruct
     public void generateData() {
 
@@ -44,39 +37,41 @@ public class SampleDataGenerator {
         Subject englishA = new Subject("English - A", teacher);
         Subject astronomiB  = new Subject("Astronomi - B", teacher);
         Subject physicsB = new Subject("Physics - B", teacher);
-
         Subject swedishA = new Subject("Swedish - A", teacher1);
         Subject englishB = new Subject("English - B", teacher1);
 
-        englishA.addStudentToSubject(student);
-        englishA.addStudentToSubject(student1);
-        englishA.addStudentToSubject(student3);
-        englishA.addStudentToSubject(student4);
+        student.addSubject(englishA);
+        student1.addSubject(englishA);
+        student2.addSubject(englishA);
+        student3.addSubject(englishA);
 
-        astronomiB.addStudentToSubject(student4);
-        astronomiB.addStudentToSubject(student5);
+        student4.addSubject(astronomiB);
+        student1.addSubject(astronomiB);
+        student5.addSubject(astronomiB);
 
-        physicsB.addStudentToSubject(student1);
-        physicsB.addStudentToSubject(student2);
-        physicsB.addStudentToSubject(student5);
+        student.addSubject(physicsB);
+        student2.addSubject(physicsB);
+        student3.addSubject(physicsB);
+        student5.addSubject(physicsB);
 
-        swedishA.addStudentToSubject(student4);
-        swedishA.addStudentToSubject(student4);
-        swedishA.addStudentToSubject(student1);
+        student.addSubject(swedishA);
+        student1.addSubject(swedishA);
+        student3.addSubject(swedishA);
 
-        englishB.addStudentToSubject(student3);
-        englishB.addStudentToSubject(student5);
-        englishB.addStudentToSubject(student);
+        student.addSubject(englishB);
+        student1.addSubject(englishB);
+        student2.addSubject(englishB);
+        student4.addSubject(englishB);
 
-        studentService.createStudent(student);
-        studentService.createStudent(student1);
-        studentService.createStudent(student2);
-        studentService.createStudent(student3);
-        studentService.createStudent(student4);
-        studentService.createStudent(student5);
+        em.persist(student);
+        em.persist(student1);
+        em.persist(student2);
+        em.persist(student3);
+        em.persist(student4);
+        em.persist(student5);
 
-        teacherService.createTeacher(teacher);
-        teacherService.createTeacher(teacher1);
+        em.persist(teacher);
+        em.persist(teacher1);
 
         em.persist(englishA);
         em.persist(englishB);

@@ -1,5 +1,6 @@
 package se.iths.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -22,7 +23,11 @@ public class Student {
     @NotEmpty(message = "Cannot be empty!")
     private String email;
     private String phoneNumber;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
+    @JoinTable(
+            name = "subjects",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private List<Subject> subjects = new ArrayList<>();
 
     public Student(String firstName, String lastName, String email, String phoneNumber) {
@@ -34,6 +39,12 @@ public class Student {
 
     public Student() { }
 
+    public void addSubject(Subject subject) {
+        subjects.add(subject);
+        subject.getStudents().add(this);
+    }
+
+    @JsonbTransient
     public List<Subject> getSubjects() {
         return subjects;
     }
